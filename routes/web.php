@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('importExportView', 'App\Http\Controllers\E2IController@importExportView');
+Route::get('export', 'App\Http\Controllers\E2IController@export')->name('export');
+Route::post('import', 'App\Http\Controllers\E2IController@import')->name('import');
