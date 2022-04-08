@@ -15,20 +15,20 @@ class CreateExcel2imagesTable extends Migration
     {
         Schema::create('excel2images', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name')->nullable();
-            $table->text('customer_address')->nullable();
-            $table->string('address_verification_status')->nullable();
-            $table->string('house_picture')->nullable();
-            $table->string('gps')->nullable();
-            $table->string('gps_latitude')->nullable();
-            $table->string('gps_longitude')->nullable();
-            $table->string('gps_altitude')->nullable();
-            $table->string('gps_precision')->nullable();
-            $table->text('landmark_description')->nullable();
-            $table->text('comment')->nullable();
-            $table->string('contact_person')->nullable();
-            $table->string('verification_officer_name')->nullable();
-            $table->string('verification_date')->nullable();
+            $table->string('customer_name');
+            $table->text('customer_address');
+            $table->string('address_verification_status');
+            $table->string('house_picture');
+            $table->string('gps');
+            $table->string('gps_latitude');
+            $table->string('gps_longitude');
+            $table->string('gps_altitude');
+            $table->string('gps_precision');
+            $table->text('landmark_description');
+            $table->text('comment');
+            $table->string('contact_person');
+            $table->string('verification_officer_name');
+            $table->string('verification_date');
             $table->timestamps();
         });
     }

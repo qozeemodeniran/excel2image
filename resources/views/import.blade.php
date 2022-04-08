@@ -9,10 +9,10 @@
 <div class="container">
     <div class="card bg-light mt-3">
         <div class="card-header">
-            Excell to Image Conversion
+            Excel to Image Conversion
         </div>
         <div class="card-body">
-            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('import-to-view') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="file" class="form-control">
                 <br>
