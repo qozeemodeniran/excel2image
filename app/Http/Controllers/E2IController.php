@@ -8,13 +8,15 @@ use App\Imports\Import;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use File;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class E2IController extends Controller
 {
     public function importExportView()
     {
        $resulted_images = [];
-       $res = [];
+    //    $res = [];
+       $image = "";
         return view('import');
     }
 
@@ -56,7 +58,8 @@ class E2IController extends Controller
 
             $import_data_array = [];
             $resulted_images = [];
-            $res = [];
+            // $res = [];
+            $image = "";
 
             $import_data = [
                 "customer_one" => $importData_arr[1],
@@ -73,7 +76,7 @@ class E2IController extends Controller
 
             for($i=0; $i <=sizeof($import_data); $i++) {
                 foreach($import_data as $inner_array){
-                    $view = view('result', ['import_data' => $import_data, 'inner_array' => $inner_array])->render();
+                    $view = view('result', ['import_data' => $import_data, 'inner_array' => $inner_array, 'image' => $image])->render();
                     $html = json_encode(['html' => $view]);
                             
                     $curl = curl_init();
@@ -94,6 +97,7 @@ class E2IController extends Controller
                         ),
                     ));
                     $result = curl_exec($curl);
+
                     if (curl_errno($curl)) {
                         echo 'Error:' . curl_error($curl);
                     } else {
@@ -101,17 +105,28 @@ class E2IController extends Controller
                             }
                     curl_close ($curl);
 
+                    $images_array = [];
+
                     $res = json_decode($result, true);
-                    $res = $res['data'];
-                    $res = explode(',' , $res);
-                    $res = $res[1];
-                    $filename_path =  md5(time().uniqid()).".jpg"; 
-                    $res = base64_decode($res);
-                    file_put_contents("uploads/".$filename_path,$res); 
+                    $res_data = $res['data'];
+
+                    $image = "<img src='$res_data' alt='avs_image'>";
+                    $path = md5(time().uniqid()).".jpg";
+
+                    array_push($images_array, $image);
+
+                    foreach($images_array as $image_array){
+                        echo $image_array;
+                        echo "<button style='float:right; margin-right:10%;'><a download='$path' href='$res_data'>Download</a></button><hr><br><br>";
+                    }        
                 }
-                return view('result', ['res' => $res, 'import_data' => $import_data, 'inner_array' => $inner_array]);
+                return view('display', ['image_array' => $image_array]);
             }
         }
         return back();
+    }
+    
+    public function display($path) {
+        return view('display', ['image' => $image] );
     }
 }

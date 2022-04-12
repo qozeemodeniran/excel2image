@@ -183,7 +183,6 @@
             alt=""
           />
         </div>
-        <!-- {{ json_encode($inner_array) }} -->
         <h1>
           Address
           Verification Report
@@ -273,10 +272,6 @@
               <td class="theDiv">
                 <label for="">Full Name</label>
                 <p>{{ $inner_array[0] }}</p>
-              </td>
-              <td class="theDiv">
-                <label for="">Phone Number</label>
-                <p>'.$sub['phone'].'</p>
               </td>
             </tr>
             <tr>
