@@ -25,6 +25,7 @@
           /* padding: 1.5rem 3.5rem; */
           /* width: 3152px; */
           width: 1600px;
+          /* width: fit-content; */
           margin: auto;
           display: flex;
           background-color: #f8f8f8;
@@ -33,6 +34,7 @@
         /* Aside */
         aside {
           width: 550px;
+          /* width: fit-content; */
           background-color: #fff;
           padding: 1.5rem 5rem;
         }

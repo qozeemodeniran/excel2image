@@ -22,3 +22,4 @@ Route::post('import-to-view', 'App\Http\Controllers\E2IController@import')->name
 Route::get('export', 'App\Http\Controllers\E2IController@export')->name('export');
 Route::post('import', 'App\Http\Controllers\E2IController@import')->name('import');
 Route::get('display-view', 'App\Http\Controllers\E2IController@display')->name('display-view');
+Route::post('display', 'App\Http\Controllers\E2IController@display')->name('display');
