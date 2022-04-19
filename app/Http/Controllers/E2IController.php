@@ -129,8 +129,14 @@ class E2IController extends Controller
                         echo $image_array;
                         array_push($count, $image_array);
 
-                        $xpath = new DOMXPath(@DOMDocument::loadHTML($image));
-                        $src = $xpath->evaluate("string(//img/@src)"); 
+                        // $xpath = new DOMXPath(@DOMDocument::loadHTML($image));
+                        // $xpath = (new DOMXPath)->get()
+                        // $src = $xpath->evaluate("string(//img/@src)"); 
+                        
+                        $doc = new DOMDocument();
+                        $doc->loadHTML($image);
+                        $xpath = new DOMXPath($doc);
+                        $src = $xpath->evaluate("string(//img/@src)"); # "/images/image.jpg"
                         if(!$src){$failure += 1;} else {$success +=1;}
 
                         echo "<button style='float:right; margin-right:10%;'><a download='$path' href='$res_data'>Download</a></button><hr><br><br>";
