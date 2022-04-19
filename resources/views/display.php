@@ -7,7 +7,8 @@
   <title>Images</title>
 </head>
 <body>
-  
+<?php echo "<h1>Success: $success</h1>"; ?>
+<?php echo "<h1>Failure: $failure</h1>"; ?>
 </body>
 </html>
  

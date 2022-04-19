@@ -61,6 +61,8 @@ class E2IController extends Controller
             $resulted_images = [];
             $image = "";
             $count = [];
+            $success = 0;
+            $failure = 0;
 
             $import_data = [
                 "customer_one" => $importData_arr[1],
@@ -113,26 +115,11 @@ class E2IController extends Controller
                     $res = json_decode($result, true);
                     $res_data = $res['data'];
                     $new_res_data = explode(',', $res_data);
-                    // $_64decode = base64_decode($new_res_data[ 1 ]);
-                    $_64decode = base64_decode(json_encode($new_res_data));
+                    $_64decode = base64_decode($new_res_data[ 1 ]);
+                    // $_64decode = base64_decode(json_encode($new_res_data));
 
                     $image = "<img src='$res_data' alt='avs_image' width='100%' height='100%'>";
                     $path = md5(time().uniqid()).".jpg";
-
-                    // file_put_contents("uploads/images/" . $path, $_64decode);
-                    // $pathdir = "uploads/images/";
-                    // $zipcreated = "avs.zip";
-                    // $zip = new ZipArchive;
-                    // if($zip -> open($zipcreated, ZipArchive::CREATE ) === TRUE) {
-    
-                    //     $dir = opendir($pathdir);
-                    //     while($file = readdir($dir)) {
-                    //         if(is_file($pathdir.$file)) {
-                    //             $zip -> addFile($pathdir.$file, $file);
-                    //         }
-                    //     }
-                    //     $zip ->close();
-                    // }
 
                     array_push($images_array, $image);
                     array_push($paths_array, $path);
@@ -140,6 +127,12 @@ class E2IController extends Controller
 
                     foreach($images_array as $image_array){
                         echo $image_array;
+                        array_push($count, $image_array);
+
+                        $xpath = new DOMXPath(@DOMDocument::loadHTML($image));
+                        $src = $xpath->evaluate("string(//img/@src)"); 
+                        if(!$src){$failure += 1;} else {$success +=1;}
+
                         echo "<button style='float:right; margin-right:10%;'><a download='$path' href='$res_data'>Download</a></button><hr><br><br>";
                     }
 
@@ -158,8 +151,11 @@ class E2IController extends Controller
                         $zip ->close();
                     }
                 } 
+
                 echo "<center><button style='text-align: center; margin-right:30%; margin-left:30%;'>
                         <a href='$zipcreated' download>----------Download All(Zip)----------</a></button><br><br></center>";
+
+                // dd($count);
                 
                 return view('display', [
                     'image_array' => $image_array, 
@@ -167,6 +163,8 @@ class E2IController extends Controller
                     'path' => $path, 
                     'paths_array' => $paths_array, 
                     'res_data' => $res_data,
+                    'success' => $success,
+                    'failure' => $failure
                 ]);
             }
         }
