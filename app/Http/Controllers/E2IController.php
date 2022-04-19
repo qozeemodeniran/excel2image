@@ -59,7 +59,6 @@ class E2IController extends Controller
 
             $import_data_array = [];
             $resulted_images = [];
-            // $res = [];
             $image = "";
             $count = [];
 
@@ -111,15 +110,39 @@ class E2IController extends Controller
                     $paths_array = [];
                     $res_array = [];
 
-                    // $original_res = json_decode($result, true);
                     $res = json_decode($result, true);
                     $res_data = $res['data'];
+                    $new_res_data = explode(',', $res_data);
+                    // $_64decode = base64_decode($new_res_data[ 1 ]);
+                    $_64decode = base64_decode(json_encode($new_res_data));
 
                     $image = "<img src='$res_data' alt='avs_image' width='100%' height='100%'>";
                     $path = md5(time().uniqid()).".jpg";
 
-                    $new_res_data = explode(',', $result);
-                    $_64decode = base64_decode($new_res_data[1]);
+                    // file_put_contents("uploads/images/" . $path, $_64decode);
+                    // $pathdir = "uploads/images/";
+                    // $zipcreated = "avs.zip";
+                    // $zip = new ZipArchive;
+                    // if($zip -> open($zipcreated, ZipArchive::CREATE ) === TRUE) {
+    
+                    //     $dir = opendir($pathdir);
+                    //     while($file = readdir($dir)) {
+                    //         if(is_file($pathdir.$file)) {
+                    //             $zip -> addFile($pathdir.$file, $file);
+                    //         }
+                    //     }
+                    //     $zip ->close();
+                    // }
+
+                    array_push($images_array, $image);
+                    array_push($paths_array, $path);
+                    array_push($res_array, $res_data);
+
+                    foreach($images_array as $image_array){
+                        echo $image_array;
+                        echo "<button style='float:right; margin-right:10%;'><a download='$path' href='$res_data'>Download</a></button><hr><br><br>";
+                    }
+
                     file_put_contents("uploads/images/" . $path, $_64decode);
                     $pathdir = "uploads/images/";
                     $zipcreated = "avs.zip";
@@ -134,17 +157,7 @@ class E2IController extends Controller
                         }
                         $zip ->close();
                     }
-
-                    array_push($images_array, $image);
-                    array_push($paths_array, $path);
-                    array_push($res_array, $res_data);
-
-                    foreach($images_array as $image_array){
-                        echo $image_array;
-                        echo "<button style='float:right; margin-right:10%;'><a download='$path' href='$res_data'>Download</a></button><hr><br><br>";
-                    }
                 } 
-
                 echo "<center><button style='text-align: center; margin-right:30%; margin-left:30%;'>
                         <a href='$zipcreated' download>----------Download All(Zip)----------</a></button><br><br></center>";
                 
@@ -154,10 +167,6 @@ class E2IController extends Controller
                     'path' => $path, 
                     'paths_array' => $paths_array, 
                     'res_data' => $res_data,
-                    // 'files_to_zip' => $files_to_zip,
-                    // 'zip_file_name' => $zip_file_name,
-                    // 'zip' => $zip,
-                    // 'zip_file' => $zip_file
                 ]);
             }
         }
@@ -168,15 +177,11 @@ class E2IController extends Controller
         return view('display', [
             'image' => $image, 
             'images' => $images, 
-            // 'zip_file' => $zip_file, 
             'image_array' => $image_array, 
             'images_array' => $images_array, 
             'path' => $path, 
             'paths_array' => $paths_array, 
             'res_data' => $res_data,
-            // 'zipName' => $zipName
-            // 'avs_img' => $avs_img,
-            // 'download_btn' => $download_btn
         ] );
     }
 }
