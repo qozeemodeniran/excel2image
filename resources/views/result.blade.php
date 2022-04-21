@@ -103,6 +103,10 @@
         aside div .success.status span {
           background-color: #17dc89;
         }
+
+        aside div .danger.status span {
+          background-color: #dc1724;
+        }
   
         aside div .fail.status {
           background-color: #ff00001e;
@@ -215,10 +219,15 @@
             "
             >Verification Status</span
           >
-          <span class="status success">
-            <span></span>
-            Verified</span
-          >
+
+          <?php 
+            if($inner_array[2] == 'Verified') {
+              echo "<span class='status success'><span></span>Verified</span>";
+            }
+            elseif($inner_array[2] == 'Not Verified') {
+              echo "<span class='status danger'><span></span>Not Verified</span>";
+            }
+          ?>      
         </div>
   
         <div
