@@ -117,10 +117,11 @@ class E2IController extends Controller
                     $new_res_data = explode(',', $res_data);
                     $_64decode = base64_decode($new_res_data[ 1 ]);
                     // $_64decode = base64_decode(json_encode($new_res_data));
-
-                    $image = "<img src='$res_data' alt='avs_image' width='100%' height='100%'>";
-                    $path = md5(time().uniqid()).".jpg";
-
+                    
+                    $name = $inner_array[0];
+                    $image = "<img src='$res_data' alt='$name' width='100%' height='100%'>";
+                    $path = $name . "-" .  md5(time().uniqid()).".jpg";
+                
                     array_push($images_array, $image);
                     array_push($paths_array, $path);
                     array_push($res_array, $res_data);

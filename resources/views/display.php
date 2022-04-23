@@ -11,4 +11,3 @@
 <?php echo "<h1>Failure: $failure</h1>"; ?>
 </body>
 </html>
- 
